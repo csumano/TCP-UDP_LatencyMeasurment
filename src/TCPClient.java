@@ -18,9 +18,18 @@ public class TCPClient {
     public void sendMessage(int size) throws IOException{
 
         DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-        output.write(size);
+
+
+        long startTime = System.nanoTime();
+
+        output.write(new byte[size]);
 
         DataInputStream input = new DataInputStream(socket.getInputStream());
+
+        long finalTime = System.nanoTime() - startTime;
+
+        System.out.println("Total time = " + finalTime);
+
 
     }
 

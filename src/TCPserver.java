@@ -18,6 +18,7 @@ public class TCPserver {
 
     public void start(int size) throws IOException{
         // The client that connected to my server
+
         Socket socket = server.accept();
         System.out.println("Server has started");
 
@@ -26,23 +27,11 @@ public class TCPserver {
 
         DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
-        output.write(size);
+        output.write(new byte[size]);
 
-        System.out.println("Size is:" + size);
+        System.out.println("Size is: " + size);
 
-//
-//        // Scanner allows for getInputStream to be workable
-//        Scanner s = new Scanner(clientSocket.getInputStream());
-//
-//
-//        while (s.hasNext()){
-//            System.out.print(s.next());
-//        }
-//
-//        s.close();
+
     }
-
-
-
 
 }
