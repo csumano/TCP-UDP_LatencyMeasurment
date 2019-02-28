@@ -1,57 +1,49 @@
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter 1 for server, enter 2 for client: ");
+        int choice = s.nextInt();
 
         try {
-            TCPserver server = new TCPserver();
-            TCPClient client = new TCPClient();
 
-            server.start(1);
-            server.start(64);
-            server.start(1024);
+            if(choice == 1){
 
+                TCPserver tcpServer = new TCPserver(2699);
 
+                tcpServer.start(1);
+                tcpServer.start(64);
+                tcpServer.start(1024);
 
-            client.sendMessage(1);
-            client.sendMessage(64);
-            client.sendMessage(1024);
+                UDPServer udpServer = new UDPServer(2699);
+
+                udpServer.start(1);
+                udpServer.start(64);
+                udpServer.start(1024);
+
+            } else if (choice == 2){
+
+                TCPClient tcpClient = new TCPClient("localhost", 2699);
+
+                tcpClient.sendMessage(1);
+                tcpClient.sendMessage(64);
+                tcpClient.sendMessage(1024);
+
+                UDPClient udpClient = new UDPClient("localhost", 2699);
+
+                udpClient.sendMessage(1);
+                udpClient.sendMessage(64);
+                udpClient.sendMessage(1024);
+
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-//        try {
-//            TCPserver server = new TCPserver();
-//            TCPClient client = new TCPClient();
-//            Thread thread1 =  new Thread(() -> {
-//                try {
-//                    server.start(3);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-//            thread1.start();
-//            client.sendMessage(1);
-//            client.sendMessage(64);
-//            client.sendMessage(1024);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-
-
-
 
     }
 }

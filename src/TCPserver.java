@@ -3,33 +3,45 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class TCPserver {
 
     ServerSocket server;
-    int port = 2699;
+    int port;
 
-    public TCPserver() throws IOException{
+    public TCPserver(int port) {
 
-        server = new ServerSocket(port);
+        this.port = port;
 
     }
 
-    public void start(int size) throws IOException{
-        // The client that connected to my server
+    public void start(int size) {
 
-        Socket socket = server.accept();
-        System.out.println("Server has started");
+        try {
+
+            server = new ServerSocket(port);
+
+            Socket socket = server.accept();
+            System.out.println("TCP Server has started");
+
+            byte[] bytes = new byte[size];
+            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+            output.write(bytes);
+
+            DataInputStream input = new DataInputStream(socket.getInputStream());
+            input.readByte();
+
+            input.close();
+            output.close();
+            socket.close();
+            server.close();
+
+            System.out.println("TCP Server has closed");
 
 
-        DataInputStream input = new DataInputStream(socket.getInputStream());
-
-        DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-
-        output.write(new byte[size]);
-
-        System.out.println("Size is: " + size);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
 
     }
