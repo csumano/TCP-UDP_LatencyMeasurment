@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class TCPserver {
 
@@ -17,6 +18,7 @@ public class TCPserver {
 
     public void start(int size) {
 
+
         try {
 
             server = new ServerSocket(port);
@@ -25,11 +27,15 @@ public class TCPserver {
             System.out.println("TCP Server has started");
 
             byte[] bytes = new byte[size];
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-            output.write(bytes);
 
             DataInputStream input = new DataInputStream(socket.getInputStream());
-            input.readByte();
+
+            for (int i = 0; i < size; i++) {
+                bytes[i] = input.readByte();
+            }
+
+            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+            output.write(bytes);
 
             input.close();
             output.close();

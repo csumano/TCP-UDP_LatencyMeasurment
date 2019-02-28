@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.*;
 
 public class UDPServer {
@@ -16,20 +18,24 @@ public class UDPServer {
         try {
 
             datagramSocket = new DatagramSocket(port);
+            byte[] bytes = new byte[size];
+
+            DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
 
             System.out.println("UDP Server has started");
-
-            byte[] bytes = new byte[size];
-            DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
             serverSocket = new ServerSocket(port);
-            datagramSocket.receive(packet);
-            packet = new DatagramPacket(bytes, bytes.length, packet.getAddress(), packet.getPort());
-            datagramSocket.send(packet);
+
+            for (int i = 0; i < size; i++) {
+                datagramSocket.receive(packet);
+                packet = new DatagramPacket(bytes, bytes.length, packet.getAddress(), packet.getPort());
+                datagramSocket.send(packet);
+
+            }
 
             serverSocket.close();
             datagramSocket.close();
 
-            System.out.println("UDP Server has stopped");
+            System.out.println("UDP Server has closed");
 
 
         } catch (IOException e) {

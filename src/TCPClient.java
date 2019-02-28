@@ -17,27 +17,25 @@ public class TCPClient {
 
     public long sendMessage(int size) throws IOException{
 
+        byte[] bytes = new byte[size];
+
         socket = new Socket(host, port);
-        long finalTime = 0;
+        DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
-        try {
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+        long startTime = System.nanoTime();
+        output.write(bytes);
 
-            byte[] bytes = new byte[size];
-            long startTime = System.nanoTime();
-            output.write(bytes);
-            DataInputStream input = new DataInputStream(socket.getInputStream());
-            finalTime = System.nanoTime() - startTime;
-            System.out.println("TCP RTT = " + finalTime);
-
-            input.close();
-            output.close();
-            socket.close();
-
-
-        } catch (IOException e){
-            e.printStackTrace();
+        DataInputStream input = new DataInputStream(socket.getInputStream());
+        for (int i =0; i< size; i++) {
+            bytes[i] = input.readByte();
         }
+
+        long finalTime = System.nanoTime() - startTime;
+        System.out.println("TCP RTT = " + finalTime);
+
+        input.close();
+        output.close();
+        socket.close();
 
         return finalTime;
 
