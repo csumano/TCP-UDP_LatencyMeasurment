@@ -4,7 +4,7 @@ import java.net.*;
 
 public class UDPClient {
 
-    DatagramSocket clientSocket;
+    private DatagramSocket clientSocket;
     DatagramPacket packet;
     int port;
     String host;

@@ -52,4 +52,19 @@ public class TCPserver {
 
     }
 
+    public long server1mb(int message, int size){
+
+        try{
+            server = new ServerSocket(port);
+            byte[] bytes = new byte[size];
+
+        } catch (IOException e){
+
+        }
+        return 0;
+
+
+
+    }
+
 }
