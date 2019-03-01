@@ -1,3 +1,5 @@
+package com.csc445.assignment1;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.Arrays;

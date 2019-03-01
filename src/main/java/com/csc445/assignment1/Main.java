@@ -1,4 +1,4 @@
-import jdk.swing.interop.SwingInterOpUtils;
+package com.csc445.assignment1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
