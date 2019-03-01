@@ -2,12 +2,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class TCPClient {
 
-    Socket socket;
-    String host;
-    int port;
+    private String host;
+    private int port;
 
     public TCPClient(String host, int port) throws IOException {
 
@@ -15,18 +15,19 @@ public class TCPClient {
         this.port = port;
     }
 
+    // send bytes to the server and get rtt
     public long sendMessage(int size) throws IOException{
 
         byte[] bytes = new byte[size];
 
-        socket = new Socket(host, port);
+        Socket socket = new Socket(host, port);
         DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
         long startTime = System.nanoTime();
         output.write(bytes);
 
         DataInputStream input = new DataInputStream(socket.getInputStream());
-        for (int i =0; i< size; i++) {
+        for (int i =0; i < size; i++) {
             bytes[i] = input.readByte();
         }
 
@@ -36,6 +37,37 @@ public class TCPClient {
         input.close();
         output.close();
         socket.close();
+
+        return finalTime;
+
+    }
+
+    // send 1mb of data
+    public long send1mb(int message, int size) throws IOException {
+        Socket socket = new Socket(host, port);
+
+        DataInputStream input = new DataInputStream(socket.getInputStream());
+        DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+
+        byte[] bytes = new byte[message];
+        byte[] echo = new byte[size];
+        Arrays.fill(bytes,(byte)1);
+
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < message; i++) {
+            output.write(echo);
+            bytes[i] = input.readByte();
+        }
+
+        long finalTime = System.nanoTime() - startTime;
+
+        System.out.println("Time = " + finalTime);
+
+        input.close();
+        output.close();
+        socket.close();
+
 
         return finalTime;
 
