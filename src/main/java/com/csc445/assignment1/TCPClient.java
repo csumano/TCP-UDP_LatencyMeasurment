@@ -57,6 +57,7 @@ public class TCPClient {
 
         long startTime = System.nanoTime();
 
+        //go through each message size , write the byte then read it
         for (int i = 0; i < message; i++) {
             output.write(echo);
             bytes[i] = input.readByte();

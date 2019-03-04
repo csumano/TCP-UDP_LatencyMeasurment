@@ -27,12 +27,9 @@ public class UDPClient {
 
         long startTime = System.nanoTime();
 
-        for (int i = 0; i < size; i++) {
-            clientSocket.send(packet);
-            packet = new DatagramPacket(bytes, size);
-            clientSocket.receive(packet);
-
-        }
+        clientSocket.send(packet);
+        packet = new DatagramPacket(bytes, size);
+        clientSocket.receive(packet);
 
         long finalTime = System.nanoTime() - startTime;
         System.out.println("UDP RTT = " + finalTime);

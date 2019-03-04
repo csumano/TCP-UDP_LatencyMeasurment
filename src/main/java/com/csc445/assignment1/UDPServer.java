@@ -22,12 +22,9 @@ public class UDPServer {
 
         System.out.println("UDP Server has started");
 
-        for (int i = 0; i < size; i++) {
-            datagramSocket.receive(packet);
-            packet = new DatagramPacket(bytes, bytes.length, packet.getAddress(), packet.getPort());
-            datagramSocket.send(packet);
-
-        }
+        datagramSocket.receive(packet);
+        packet = new DatagramPacket(bytes, bytes.length, packet.getAddress(), packet.getPort());
+        datagramSocket.send(packet);
 
         datagramSocket.close();
 

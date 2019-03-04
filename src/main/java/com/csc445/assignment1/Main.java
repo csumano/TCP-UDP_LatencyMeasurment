@@ -153,7 +153,7 @@ public class Main {
 
     //calculate throughput
     private static double throughputCalc(long time, double size) {
-        return size * 8 / nanoToMicro(time);
+        return size * 8 / nanoToSeconds(time);
     }
 
     //nano to micro
